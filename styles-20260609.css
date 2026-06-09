@@ -1166,6 +1166,56 @@ select {
   gap: 10px;
 }
 
+.booking-links-panel {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(61, 58, 56, 0.08);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.booking-link {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--coffee);
+  display: grid;
+  gap: 8px;
+  min-height: 118px;
+  padding: 22px;
+  transition: all 0.3s ease;
+}
+
+.booking-link:hover {
+  border-color: rgba(163, 177, 155, 0.82);
+  transform: translateY(-2px);
+}
+
+.booking-link.primary {
+  background: var(--coffee);
+  color: var(--surface);
+}
+
+.booking-link span {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.booking-link small {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.booking-link.primary small {
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .booking-form {
   background: var(--surface);
   border: 1px solid rgba(61, 58, 56, 0.08);
@@ -1418,6 +1468,14 @@ address a {
   .booking-form,
   .footer {
     grid-template-columns: 1fr;
+  }
+
+  .booking-links-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-link {
+    min-height: 94px;
   }
 
   .booking-summary-card {
