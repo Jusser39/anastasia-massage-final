@@ -115,11 +115,13 @@ if (openBookingForm && bookingForm) {
 }
 
 if (bookingForm) {
-  bookingForm.addEventListener("submit", (event) => {
+  bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(bookingForm);
     const name = String(formData.get("name") || "").trim();
     const phone = String(formData.get("phone") || "").trim();
+    const comment = String(formData.get("comment") || "").trim();
+    const booking = String(formData.get("booking") || "").trim();
 
     if (!name || !phone) {
       if (formStatus) {
@@ -129,7 +131,40 @@ if (bookingForm) {
     }
 
     if (formStatus) {
-      formStatus.textContent = "Заявка подготовлена. Вечером можно подключить сюда отправку в бот.";
+      formStatus.textContent = "Отправляю заявку...";
+    }
+
+    try {
+      const response = await fetch("/api/telegram", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, comment, booking }),
+      });
+
+      const result = await response.json().catch(() => ({ ok: false }));
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "send failed");
+      }
+
+      if (formStatus) {
+        formStatus.textContent = "Заявка отправлена. Анастасия скоро свяжется с вами.";
+      }
+
+      bookingForm.reset();
+      updateBookingSummary();
+    } catch (error) {
+      if (formStatus) {
+        formStatus.textContent = "Заявка не отправилась автоматически. Пожалуйста, продублируйте ее в WhatsApp.";
+      }
+    }
+  });
+}
+
+if (bookingForm) {
+  bookingForm.addEventListener("input", () => {
+    if (formStatus) {
+      formStatus.textContent = "";
     }
   });
 }
