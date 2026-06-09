@@ -1592,7 +1592,23 @@ address a {
   }
 
   .date-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .date-button {
+    aspect-ratio: auto;
+    min-height: 68px;
+    padding: 10px 8px;
+  }
+
+  .date-button span {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .date-button strong {
+    font-size: 25px;
   }
 
   .footer {
